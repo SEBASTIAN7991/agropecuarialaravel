@@ -197,6 +197,7 @@
                             <label>Tipo de Convenio</label>
                             <select class="form-control" id="Tipo_Convenio" name="Tipo_Convenio">
                                 <option value="0">Sin Asignacion</option>
+                                <option value="EMILIO TOVILLA">EMILIO TOVILLA</option>
                                 <option value="PDE. MPAL. GILBERTO RODRIGUEZ DE LOS SANTOS">PDE. MPAL. GILBERTO RODRIGUEZ DE LOS SANTOS</option>
                                 <option value="SINDICO MARIA DE JESUS CRUZ UTRILLA">SINDICO MARIA DE JESUS CRUZ UTRILLA</option>
                                 <option value="1ER. REG. JOSE PEREZ GOMEZ">1ER. REG. JOSE PEREZ GOMEZ</option>

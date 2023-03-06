@@ -37,7 +37,8 @@ class ValidacionesExport2 implements FromCollection,WithHeadings,WithStyles,Shou
             'Localidad',
             'Observaciones',
             'Proyecto Solicitado',
-            'Region'
+            'Region',
+            'Oficio de Control'
         ];
     }
     public function styles(Worksheet $sheet)
@@ -65,7 +66,7 @@ class ValidacionesExport2 implements FromCollection,WithHeadings,WithStyles,Shou
         ->join('proyectos', 'validaciones.Id_Pro', '=', 'proyectos.id')
         ->select(DB::raw("validaciones.Id,validaciones.Resp_Valid, solicitudes.Tipo_Convenio, validaciones.Tipo_Asignacion, validaciones.Fecha_Val_Inicio,validaciones.Verificado,validaciones.Cant_Validado,validaciones.Ben_H_Validado,validaciones.Ben_M_Validado,
             proyectos.Monto_Pro, validaciones.Cant_Validado * proyectos.Monto_Pro,
-            solicitudes.Subrepresentante, organizaciones.Nom_Org, localidades.Nom_Loc ,validaciones.Comentario,proyectos.Nom_Pro, regiones.Nom_Reg"))
+            solicitudes.Subrepresentante, organizaciones.Nom_Org, localidades.Nom_Loc ,validaciones.Comentario,proyectos.Nom_Pro, regiones.Nom_Reg,Of_Control"))
         ->groupBy(DB::raw("validaciones.id"))
         ->orderBy(DB::raw("validaciones.Tipo_Asignacion, solicitudes.Tipo_Convenio"))
         ->get();

@@ -71,16 +71,7 @@ class ProductoController extends Controller
         
         return response()->json(['success' => 'Guardado']);
     }
-    public function storeProducto(Request $request)
-    {
-        
-        if(1>1){
-            dd('hay muchos productos');
-        }else{
-            dd('solo hay un producto');
-        }
-        
-    }
+    
 
     /**
      * Display the specified resource.

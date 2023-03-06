@@ -22,6 +22,7 @@
     <thead>
         <tr>
             <th>Id</th>
+            <th>Folio</th>
             <th>Fecha Tramite</th>
             <th>Localidad</th>
             <th>Region</th>
@@ -208,6 +209,7 @@ $(document).ready(function(){
             ajax: "{{ route('fierros.index') }}",
             columns: [
                 {data: 'id'},
+                {data: 'Folio_Pago'},
                 {data: 'Fecha_Tramite'},
                 {data: 'localidades.Nom_Loc'},
                 {data: 'regiones.Nom_Reg'},

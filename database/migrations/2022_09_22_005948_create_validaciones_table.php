@@ -28,7 +28,10 @@ return new class extends Migration
             $table->unsignedBigInteger('Verificado');
             $table->unsignedBigInteger('Id_Usuario');
             $table->String('Tipo_Asignacion');
+            $table->bigInteger('Of_Control');
+            $table->timestamp('Fecha_Entrega');
             $table->text('Comentario');
+            $table->string('Porcentaje');
             $table->date('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->date('updated_at')->nullable();
         });

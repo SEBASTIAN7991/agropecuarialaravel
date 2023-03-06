@@ -98,7 +98,10 @@ class ValidacionesController extends Controller
             'Verificado' => $request->Verificado,
             'Id_Usuario' => $request->Id_Usuario,
             'Tipo_Asignacion' => $request->Tipo_Asignacion,
-            'Comentario' => $request->Comentario
+            'Of_Control' => $request->Of_Control,
+            'Fecha_Entrega' => $request->Fecha_Entrega,
+            'Comentario' => $request->Comentario,
+            'Porcentaje' => $request->Porcentaje
         );
         Validaciones::insert($form_data);//primera llamar el modelo creado
 
@@ -134,7 +137,7 @@ class ValidacionesController extends Controller
     public function edit($id)
     {
         if(request()->ajax()){
-            $mis_valid= Validaciones::select('id','Id_Sol','Id_Pro','Resp_Valid','Fecha_Val_Inicio','Fecha_Val_Termino','Cant_Validado','Ben_H_Validado','Ben_M_Validado','Estatus','Verificado','Id_Usuario','Tipo_Asignacion','Comentario')
+            $mis_valid= Validaciones::select('id','Id_Sol','Id_Pro','Resp_Valid','Fecha_Val_Inicio','Fecha_Val_Termino','Cant_Validado','Ben_H_Validado','Ben_M_Validado','Estatus','Verificado','Id_Usuario','Tipo_Asignacion','Of_Control','Fecha_Entrega','Comentario','Porcentaje')
             ->with('solicitudes')
             ->findOrFail($id);
             return response()->json(['result'=>$mis_valid]);
@@ -193,7 +196,10 @@ class ValidacionesController extends Controller
             'Verificado' => $request->Verificado,
             'Id_Usuario' => $request->Id_Usuario,
             'Tipo_Asignacion' => $request->Tipo_Asignacion,
-            'Comentario' =>  $request->Comentario
+            'Of_Control' => $request->Of_Control,
+            'Fecha_Entrega' => $request->Fecha_Entrega,
+            'Comentario' =>  $request->Comentario,
+            'Porcentaje' => $request->Porcentaje
         );
         $form_data2 = array(
             'Estatus2'        =>  $request->Estatus

@@ -22,7 +22,7 @@ class FierrosController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $Fierros = Fierro::select('id','Fecha_Tramite','Id_Loc','Id_Reg','Nombre','Paterno','Materno','Curp','Tipo_Tramite')
+            $Fierros = Fierro::select('id','Folio_Pago','Fecha_Tramite','Id_Loc','Id_Reg','Nombre','Paterno','Materno','Curp','Tipo_Tramite')
             ->with('localidades')
             ->with('regiones');
 

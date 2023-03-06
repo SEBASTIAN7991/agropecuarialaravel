@@ -157,6 +157,9 @@
                                 <option value="1">Verificado</option>
                                 <option value="2">Solo Lista</option>
                                 <option value="3">Programado</option>
+                                <option value="4">Lista-Lamina</option>
+                                <option value="5">Verificado-Lamina</option>
+                                <option value="6">Programado-Lamina</option>
                             </select>
                         </div>
                         <div class="form-group col-md-2">
@@ -170,6 +173,25 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-row" style="background-color:  #bc8517 ">
+                        <div class="form-group col-md-4">
+                            <label>Oficio Control</label>
+                            <input class="form-control" type="text" name="Of_Control" id="Of_Control"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Fecha y Hora de Entrega</label>
+                            <input class="form-control" step="any" type="datetime-local" name="Fecha_Entrega" id="Fecha_Entrega"/>
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label>Porcentaje:</label>
+                            <select class="form-control" id="Porcentaje" name="Porcentaje" required>
+                                <option value="slklsk" selected>Selecciona</option>
+                                <option value="ENTREGADO">ENTREGADO</option>
+                                <option value="PENDIENTE">PENDIENTE</option>
+                            </select>
+                        </div>
+                    </div>
+
                     <div class="form-row" style="background-color:  #bc8517 ">
                         <div class="form-group col-md-12">
                             <label>Observaciones:</label>
@@ -278,90 +300,97 @@ $(document).ready(function(){
                 dropdownParent: $('#ModalAgregar'),
                 width:'100%'//en caso de no funcionar, puedes agregar el tamaño directamente en el input
             });
+
         });
     
     //==================================================
     //peticion de escuchar cambio de dato localidad
         $("#Subrepresentante").change(function(){
-                var cod = document.getElementById("Subrepresentante").value;
-                $.ajax({
-                    url :"validaciones/VerDatos/"+cod+"/",
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    dataType:"json",
-                    success:function(data)
-                    {
-                        $('#organizacion').val(data.result.organizaciones.Nom_Org);
-                        $('#localidad').val(data.result.localidades.Nom_Loc);
-                        $('#proyecto').val(data.result.proyectos.Nom_Pro);
-                        $('#Cant_Sol').val(data.result.Cant_Sol);
-                        $('#Ben_H').val(data.result.Ben_H);
-                        $('#Ben_M').val(data.result.Ben_M);
-                    },
-                    error: function(data) {
-                        var errors = data.responseJSON;
-                        console.log(errors);
-                    }
-                });
+            var cod = document.getElementById("Subrepresentante").value;
+            $.ajax({
+                url :"validaciones/VerDatos/"+cod+"/",
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                dataType:"json",
+                success:function(data)
+                {
+                    $('#organizacion').val(data.result.organizaciones.Nom_Org);
+                    $('#localidad').val(data.result.localidades.Nom_Loc);
+                    $('#proyecto').val(data.result.proyectos.Nom_Pro);
+                    $('#Cant_Sol').val(data.result.Cant_Sol);
+                    $('#Ben_H').val(data.result.Ben_H);
+                    $('#Ben_M').val(data.result.Ben_M);
+                },
+                error: function(data) {
+                    var errors = data.responseJSON;
+                    console.log(errors);
+                }
+            });
         });
     //================================================
     /* peticion de guardar o editar el registro */
         $('#form_Val').on('submit', function(event){
-                event.preventDefault(); 
-                var action_url = '';
-                if($('#action').val() == 'Add'){
-                    $('#btnGuardarSol').val('Guardando');//cambia valor de boton guardar
-                    $('#action').val('');//input para diferenciar de editar
-                    action_url = "{{ route('validaciones.store') }}";
-                }
-        
-                if($('#action').val() == 'Edit'){
-                    $('#action').val('');//input para diferencia de guardar
-                    $('#btnGuardarSol').val('Actualizando');//cambia el texto de boton editar
-                    action_url = "{{ route('validaciones.update') }}";
-                }
-        
-                $.ajax({
-                    type: 'post',
-                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                    url: action_url,
-                    data:$(this).serialize(),
-                    dataType: 'json',
-                    success: function(data) {
-                        var html = '';
-                        if(data.errors){
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'FALTO LLENAR ALGUN CAMPO',
-                                text: 'LLENA TODOS LOS CAMPOS!',
-                                
-                            })
-                            html = '<div class="alert alert-danger">';
-                            for(var count = 0; count < data.errors.length; count++){
-                                html += '<p>' + data.errors[count] + '</p>';
-                            }
-                            html += '</div>';
+            event.preventDefault(); 
+            var action_url = '';
+            if($('#action').val() == 'Add'){
+                $('#btnGuardarSol').val('Guardando');//cambia valor de boton guardar
+                $('#action').val('');//input para diferenciar de editar
+                action_url = "{{ route('validaciones.store') }}";
+            }
+    
+            if($('#action').val() == 'Edit'){
+                var hoy = new Date()
+                var fecha = hoy.getDate() + '-' + (hoy.getMonth() + 1) + '-' + hoy.getFullYear();
+                var hora = hoy.getHours() + '-' + hoy.getMinutes() + '-' + hoy.getSeconds();
+
+                var fechar_hora = fecha + hora;
+                alert(document.getElementById('Fecha_Entrega').val = fechar_hora);
+                $('#action').val('');//input para diferencia de guardar
+                $('#btnGuardarSol').val('Actualizando');//cambia el texto de boton editar
+                action_url = "{{ route('validaciones.update') }}";
+            }
+    
+            $.ajax({
+                type: 'post',
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: action_url,
+                data:$(this).serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    var html = '';
+                    if(data.errors){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'FALTO LLENAR ALGUN CAMPO',
+                            text: 'LLENA TODOS LOS CAMPOS!',
+                            
+                        })
+                        html = '<div class="alert alert-danger">';
+                        for(var count = 0; count < data.errors.length; count++){
+                            html += '<p>' + data.errors[count] + '</p>';
                         }
-                        if(data.success){
-                            var tipo = data.success;
-                            Swal.fire({
-                                position: 'Center',
-                                icon: 'success',
-                                title: 'La Validacion de Proyecto ha sido ' +tipo +' correctamente',
-                                showConfirmButton: false,
-                                timer: 1500
-                            })
-                            $('#btnGuardarSol').val('Guardar');
-                            $('#form_Val')[0].reset();
-                            $('#ModalAgregar').modal('hide');
-                            $('.validaciones').DataTable().ajax.reload();
-                        }
-                        $('#form_result').html(html);//coloca en caso de vacio input
-                    },
-                    error: function(data) {
-                        var errors = data.responseJSON;
-                        console.log(errors);
+                        html += '</div>';
                     }
-                });
+                    if(data.success){
+                        var tipo = data.success;
+                        Swal.fire({
+                            position: 'Center',
+                            icon: 'success',
+                            title: 'La Validacion de Proyecto ha sido ' +tipo +' correctamente',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        $('#btnGuardarSol').val('Guardar');
+                        $('#form_Val')[0].reset();
+                        $('#ModalAgregar').modal('hide');
+                        $('.validaciones').DataTable().ajax.reload();
+                    }
+                    $('#form_result').html(html);//coloca en caso de vacio input
+                },
+                error: function(data) {
+                    var errors = data.responseJSON;
+                    console.log(errors);
+                }
+            });
         });
 
     //==================================================
@@ -417,7 +446,7 @@ $(document).ready(function(){
             dataType:"json",
             success:function(data)
             {
-                console.log('success: '+data);
+                console.log('success: '+data.result.Fecha_Entrega);
                 $('#Subrepresentante').val(data.result.solicitudes.id).change();
                 $('#Id_Pro').val(data.result.Id_Pro).change();
                 $('#Nom_Loc').val(data.result.Nom_Loc);
@@ -432,6 +461,9 @@ $(document).ready(function(){
                 $('#Id_Usuario').val(data.result.Id_Usuario).change();
                 $('#Comentario').val(data.result.Comentario);
                 $('#Tipo_Asignacion').val(data.result.Tipo_Asignacion).change();
+                $('#Of_Control').val(data.result.Of_Control);
+                $('#Fecha_Entrega').val(data.result.Fecha_Entrega);
+                $('#Porcentaje').val(data.result.Porcentaje);
                 $('#hidden_id').val(id);//colocar valor del id oculto
                 $('#action').val('Edit');//colocar que sera un edit
             },

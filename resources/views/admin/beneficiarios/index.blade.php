@@ -184,7 +184,7 @@
                         </div>
                         <div class="form-group col-md-4">
                             <label>Curp:</label>
-                            <input autocomplete="off" type="text" class="form-control" id="Curp" name="Curp" required="true" 
+                            <input type="text" class="form-control" id="Curp" name="Curp" required="true" 
                               placeholder="Ingrese su CURP" 
                               pattern="([A-Z]{4}([0-9]{2})(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM](AS|BC|BS|CC|CL|CM|CS|CH|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[A-Z]{3}[0-9A-Z]\d)" required>
                         </div>

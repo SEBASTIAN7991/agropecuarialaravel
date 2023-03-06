@@ -51,6 +51,8 @@ class ValidacionesExport3 implements FromCollection,WithHeadings,WithStyles,Shou
         ->select(DB::raw("validaciones.Id, validaciones.Tipo_Asignacion, proyectos.Nom_Pro,proyectos.Monto_Pro,
         sum(validaciones.Cant_Validado),
         sum(validaciones.Cant_Validado)*proyectos.Monto_Pro"))
+        ->where('validaciones.Verificado','=','1')
+        ->orWhere('validaciones.Verificado','=','2')
         ->groupBy(DB::raw("validaciones.Tipo_Asignacion, proyectos.Nom_Pro"))
         ->get();
     }

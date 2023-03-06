@@ -15,7 +15,6 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-
        User::create([
             'name'=>'Sebastian Gomez Sanchez',
             'email'=>'sebas@hotmail.com',
@@ -71,6 +70,28 @@ class UserSeeder extends Seeder
             'name'=>'Erick Gonzalez Hernandez',
             'email'=>'Erick@hotmail.com',
             'password' => bcrypt('Eri9*_1')
+        ]);
+        User::create([
+            'name'=>'Maydeth Adriana Lopez Perez',
+            'email'=>'Maydeth@hotmail.com',
+            'password' => bcrypt('Maydeth*_1')
+        ]);
+        User::create([
+            'name'=>'Luis Ignacio Penagos Cruz',
+            'email'=>'Ignacio@hotmail.com',
+            'password' => bcrypt('IgNac*_2')
+        ]);
+
+        User::create([
+        'name'=>'ALBERTO ANTONIO SILVANO MENDEZ',
+        'email'=>'Alberto@hotmail.com',
+        'password' => bcrypt('Alber*/32')
+        ]);
+        
+        User::create([
+            'name'=>'Susana Lopez Santiz',
+            'email'=>'Susana@hotmail.com',
+            'password' => bcrypt('Susa_na23')
         ]);
         //User::factory(10)->create(); //crear usuarios aleotoriamente
     }

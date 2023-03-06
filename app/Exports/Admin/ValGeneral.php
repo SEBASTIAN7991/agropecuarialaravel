@@ -58,6 +58,8 @@ class ValGeneral implements FromCollection,WithHeadings,WithStyles,ShouldAutoSiz
         ->join('solicitudes', 'validaciones.Id_Sol', '=', 'solicitudes.id')
         ->join('proyectos', 'validaciones.Id_Pro', '=', 'proyectos.id')
         ->select(DB::raw("validaciones.Id, validaciones.Tipo_Asignacion, solicitudes.Tipo_Convenio,sum(validaciones.Cant_Validado),proyectos.Nom_Pro,proyectos.Monto_Pro,sum(validaciones.Cant_Validado)*proyectos.Monto_Pro"))
+        ->where('validaciones.Verificado','=','1')
+        ->orWhere('validaciones.Verificado','=','2')
         ->groupBy(DB::raw("solicitudes.Tipo_Convenio,proyectos.Nom_Pro"))
         ->orderBy(DB::raw("validaciones.Tipo_Asignacion, solicitudes.Tipo_Convenio"))
         ->get();
